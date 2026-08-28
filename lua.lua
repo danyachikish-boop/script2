@@ -272,7 +272,7 @@ SupportTab:Paragraph({
 -- ==================== TAB 3: SETTINGS ====================
 local SettingsTab = Window:Tab({ Title = "Settings", Icon = "lucide-settings" })
 
-local folderName = "ratnik hub"
+local folderName = "tyt hub"
 if makefolder and not isfolder(folderName) then
     makefolder(folderName)
 end
