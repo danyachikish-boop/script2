@@ -1,4 +1,3 @@
--- who hacks or modifies this code is a loser!
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
