@@ -1,8 +1,9 @@
+-- who hacks or modifies this code is a loser!
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
 local Window = WindUI:CreateWindow({
-    Title = "ratnik hub",
+    Title = "tyt hub",
     Icon = "gamepad-2",
     Author = "danya",
     Folder = "MyCustomHub",
@@ -42,7 +43,7 @@ bgCorner.CornerRadius = UDim.new(0, 8)
 bgCorner.Parent = customBgImage
 
 Window:Tag({
-    Title = "1 beta",
+    Title = "1 deta",
     Color = Color3.fromRGB(0, 255, 120),
     TextColor = Color3.fromRGB(0, 0, 0)
 })
@@ -69,11 +70,11 @@ local GamesDatabase = {
     {
         Name = "Skin Upgrader / Case Clicker",
         PlaceId = 131015337227568,
-        Script = "https://pastebin.com/raw/gngpxAae"
+        Script = "https://raw.githubusercontent.com/danyachikish-boop/script2/refs/heads/main/click.lua"
     }
 }
 
-local MainTab = Window:Tab({ Title = "Поиск игр", Icon = "lucide-search" })
+local MainTab = Window:Tab({ Title = "Game Search", Icon = "lucide-search" })
 
 local function getAllNames()
     local names = {}
@@ -86,7 +87,7 @@ end
 local selectedGameName = GamesDatabase[1] and GamesDatabase[1].Name or nil
 
 local GameDropdown = MainTab:Dropdown({
-    Title = "Выберите игру",
+    Title = "Select Game",
     Values = getAllNames(),
     Value = selectedGameName,
     Callback = function(Option)
@@ -95,9 +96,9 @@ local GameDropdown = MainTab:Dropdown({
 })
 
 MainTab:Input({
-    Title = "Поиск по названию",
-    Desc = "Введи название или часть букв и нажми Enter",
-    Placeholder = "Например: Murder или Border...",
+    Title = "Search by Name",
+    Desc = "Type the name or part of it and press Enter",
+    Placeholder = "Example: Murder or Border...",
     Callback = function(Text)
         local query = string.lower(Text)
         local filteredNames = {}
@@ -109,7 +110,7 @@ MainTab:Input({
         end
 
         if #filteredNames == 0 then
-            filteredNames = { "Ничего не найдено" }
+            filteredNames = { "Nothing found" }
             selectedGameName = nil
         else
             selectedGameName = filteredNames[1]
@@ -126,11 +127,11 @@ MainTab:Input({
 })
 
 MainTab:Button({
-    Title = "Запустить / Перейти",
-    Desc = "Загрузка скрипта или переход в выбранную игру",
+    Title = "Execute / Teleport",
+    Desc = "Load script or teleport to selected game",
     Callback = function()
-        if not selectedGameName or selectedGameName == "Ничего не найдено" then
-            WindUI:Notify({ Title = "Ошибка", Content = "Сначала выберите корректную игру!", Duration = 3, Icon = "alert-circle" })
+        if not selectedGameName or selectedGameName == "Nothing found" then
+            WindUI:Notify({ Title = "Error", Content = "Please select a valid game first!", Duration = 3, Icon = "alert-circle" })
             return
         end
 
@@ -145,10 +146,10 @@ MainTab:Button({
         if not targetData then return end
 
         if game.PlaceId == targetData.PlaceId then
-            WindUI:Notify({ Title = "Уведомление", Content = "Загрузка скрипта...", Duration = 3, Icon = "play" })
+            WindUI:Notify({ Title = "Notification", Content = "Loading script...", Duration = 3, Icon = "play" })
             pcall(function() loadstring(game:HttpGet(targetData.Script))() end)
         else
-            WindUI:Notify({ Title = "Телепортация", Content = "Переходим в " .. targetData.Name .. "...", Duration = 3, Icon = "arrow-right" })
+            WindUI:Notify({ Title = "Teleporting", Content = "Joining " .. targetData.Name .. "...", Duration = 3, Icon = "arrow-right" })
 
             local queueFunction = queue_on_teleport or (syn and syn.queue_on_teleport) or queueonteleport or (Fluxus and Fluxus.queue_on_teleport)
             if queueFunction then
@@ -168,18 +169,18 @@ MainTab:Button({
 })
 
 MainTab:Paragraph({
-    Title = "Примечание по телепортации",
-    Desc = "Если возникает ошибка 773 при телепортации, зайдите в нужный режим вручную. Скрипт запустится автоматически при входе."
+    Title = "Teleportation Note",
+    Desc = "If error 773 occurs during teleportation, join the game manually. The script will auto-execute upon joining."
 })
 
-local SupportTab = Window:Tab({ Title = "Поддержка", Icon = "lucide-headphones" })
+local SupportTab = Window:Tab({ Title = "Support", Icon = "lucide-headphones" })
 
 local userReportText = ""
 
 local ReportInput = SupportTab:Input({
-    Title = "Сообщить о баге / Идеи",
-    Desc = "Напишите, какой скрипт не работает или что добавить",
-    Placeholder = "Текст сообщения...",
+    Title = "Report Bug / Ideas",
+    Desc = "Let us know if a script doesn't work or what to add",
+    Placeholder = "Your message...",
     Callback = function(Text)
         userReportText = Text
     end,
@@ -193,10 +194,10 @@ local function sendReportToServer(messageText)
     local player = Players.LocalPlayer
 
     if not httpRequest then
-        return false, "Ваш исполнитель не поддерживает HTTP-запросы."
+        return false, "Your executor does not support HTTP requests."
     end
 
-    local placeName = "Неизвестно"
+    local placeName = "Unknown"
     pcall(function()
         placeName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name
     end)
@@ -224,32 +225,32 @@ local function sendReportToServer(messageText)
         pcall(function()
             responseData = HttpService:JSONDecode(response.Body)
         end)
-
+        
         if response.StatusCode == 200 then
-            return true, responseData.message or "Успешно"
+            return true, responseData.message or "Success"
         else
-            return false, responseData.message or ("Ошибка " .. tostring(response.StatusCode))
+            return false, responseData.message or ("Error " .. tostring(response.StatusCode))
         end
     else
-        return false, "Ошибка сети: " .. tostring(response)
+        return false, "Network error: " .. tostring(response)
     end
 end
 
 SupportTab:Button({
-    Title = "Отправить репорт",
-    Desc = "Отправляет ваш репорт разработчику в Discord",
+    Title = "Send Report",
+    Desc = "Sends your report to the developer on Discord",
     Callback = function()
         if userReportText == "" or userReportText:match("^%s*$") then
-            WindUI:Notify({ Title = "Ошибка", Content = "Сначала напишите текст!", Duration = 3, Icon = "alert-circle" })
+            WindUI:Notify({ Title = "Error", Content = "Please enter some text first!", Duration = 3, Icon = "alert-circle" })
             return
         end
 
-        WindUI:Notify({ Title = "Отправка...", Content = "Подождите...", Duration = 2, Icon = "send" })
+        WindUI:Notify({ Title = "Sending...", Content = "Please wait...", Duration = 2, Icon = "send" })
 
         local success, resultMessage = sendReportToServer(userReportText)
 
         if success then
-            WindUI:Notify({ Title = "Успешно!", Content = resultMessage, Duration = 4, Icon = "check" })
+            WindUI:Notify({ Title = "Success!", Content = resultMessage, Duration = 4, Icon = "check" })
             userReportText = ""
             pcall(function()
                 if ReportInput.SetText then
@@ -259,20 +260,20 @@ SupportTab:Button({
                 end
             end)
         else
-            WindUI:Notify({ Title = "Ошибка", Content = resultMessage, Duration = 5, Icon = "x-circle" })
+            WindUI:Notify({ Title = "Error", Content = resultMessage, Duration = 5, Icon = "x-circle" })
         end
     end,
 })
 
 SupportTab:Paragraph({
-    Title = "Автор скрипта",
-    Desc = "создатель danya кодер и помощник Gemini\nВерсия UI: WindUI"
+    Title = "Script Author",
+    Desc = "Creator: danya (coder) & Gemini (assistant)\nUI Version: WindUI"
 })
 
--- ==================== ВКЛАДКА 3: НАСТРОЙКИ ====================
-local SettingsTab = Window:Tab({ Title = "Настройки", Icon = "lucide-settings" })
+-- ==================== TAB 3: SETTINGS ====================
+local SettingsTab = Window:Tab({ Title = "Settings", Icon = "lucide-settings" })
 
-local folderName = "ratnik hub"
+local folderName = "tyt hub"
 if makefolder and not isfolder(folderName) then
     makefolder(folderName)
 end
@@ -307,7 +308,7 @@ local function toggleWatermark(state)
     if not state then return end 
 
     watermarkGui = Instance.new("ScreenGui")
-    watermarkGui.Name = "RatnikWatermark_Pro"
+    watermarkGui.Name = "TytWatermark_Pro"
     watermarkGui.ResetOnSpawn = false
     watermarkGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     watermarkGui.Parent = getHiddenUIContainer()
@@ -367,7 +368,7 @@ local function toggleWatermark(state)
         return icon
     end
 
-    createText(1, "❖ <b>Ratnik</b>")
+    createText(1, "❖ <b>Tyt</b>")
     createText(2, "|", Color3.fromRGB(120, 120, 140))
     createIcon(3, "rbxassetid://10709782497", Color3.fromRGB(40, 231, 83))
     local fpsLabel = createText(4, "...")
@@ -381,35 +382,35 @@ local function toggleWatermark(state)
     watermarkConnection = RunService.RenderStepped:Connect(function(deltaTime)
         frameCount = frameCount + 1
         local now = tick()
-
+        
         if now - lastUpdate >= 0.25 then
             local currentFps = math.floor(frameCount / (now - lastUpdate))
             frameCount = 0
             lastUpdate = now
-
+            
             local ping = 0
             pcall(function()
                 ping = math.floor(Stats.Network.ServerStatsItem["Data Ping"]:GetValue())
             end)
-
+            
             local fpsColor = "#28E753"
             if currentFps < 45 then fpsColor = "#FFCC00" end
             if currentFps < 25 then fpsColor = "#FF3333" end
 
             fpsLabel.Text = string.format("<font color=\"%s\"><b>%d</b></font> <font color=\"#AAAAAA\">FPS</font>", fpsColor, currentFps)
-
+            
             local pingColor = "#28E753"
             if ping > 100 then pingColor = "#FFCC00" end
             if ping > 200 then pingColor = "#FF3333" end
-
+            
             pingLabel.Text = string.format("<font color=\"%s\"><b>%d</b></font> <font color=\"#AAAAAA\">ms</font>", pingColor, ping)
         end
     end)
 end
 
 SettingsTab:Toggle({
-    Title = "Показывать панель FPS / Ping",
-    Desc = "Выводит сверху стильную плашку со статистикой",
+    Title = "Show FPS / Ping Panel",
+    Desc = "Displays a stylish statistics bar at the top",
     Value = false,
     Callback = function(State)
         toggleWatermark(State)
@@ -417,8 +418,8 @@ SettingsTab:Toggle({
 })
 
 SettingsTab:Colorpicker({
-    Title = "Цвет фона окна",
-    Desc = "Выберите цвет фона главного меню скрипта",
+    Title = "Window Background Color",
+    Desc = "Select the background color for the main script window",
     Default = Color3.fromRGB(25, 25, 30),
     Callback = function(Color)
         windowBgColorFrame.BackgroundColor3 = Color
@@ -431,14 +432,14 @@ SettingsTab:Colorpicker({
 })
 
 SettingsTab:Button({
-    Title = "Поставить картинку из папки",
-    Desc = "Загружает первую картинку из workspace/ratnik hub",
+    Title = "Set Image from Folder",
+    Desc = "Loads the first image from workspace/tyt hub",
     Callback = function()
         local getasset = getcustomasset or custom_asset
         local listfiles = listfiles
 
         if not getasset or not listfiles then
-            WindUI:Notify({ Title = "Ошибка", Content = "Эксикьютор не поддерживает загрузку файлов!", Duration = 4, Icon = "alert-circle" })
+            WindUI:Notify({ Title = "Error", Content = "Executor does not support file loading!", Duration = 4, Icon = "alert-circle" })
             return
         end
 
@@ -459,8 +460,8 @@ SettingsTab:Button({
 
         if not targetFile then
             WindUI:Notify({ 
-                Title = "Картинка не найдена", 
-                Content = "Положи картинку (.png/.jpg) в папку workspace/ratnik hub", 
+                Title = "Image Not Found", 
+                Content = "Place an image (.png/.jpg) in workspace/tyt hub folder", 
                 Duration = 4, 
                 Icon = "file-warning" 
             })
@@ -473,26 +474,26 @@ SettingsTab:Button({
         end)
 
         if success then
-            WindUI:Notify({ Title = "Успешно!", Content = "Фон из папки установлен.", Duration = 3, Icon = "check" })
+            WindUI:Notify({ Title = "Success!", Content = "Background image set from folder.", Duration = 3, Icon = "check" })
         else
-            WindUI:Notify({ Title = "Ошибка", Content = "Не удалось загрузить: " .. tostring(err), Duration = 4, Icon = "x-circle" })
+            WindUI:Notify({ Title = "Error", Content = "Failed to load: " .. tostring(err), Duration = 4, Icon = "x-circle" })
         end
     end,
 })
 
 SettingsTab:Button({
-    Title = "Сбросить фон",
-    Desc = "Удалить картинку с фона",
+    Title = "Reset Background",
+    Desc = "Remove background image",
     Callback = function()
         customBgImage.ImageTransparency = 1
         customBgImage.Image = ""
-        WindUI:Notify({ Title = "Сброс", Content = "Фон удалён.", Duration = 2, Icon = "trash-2" })
+        WindUI:Notify({ Title = "Reset", Content = "Background removed.", Duration = 2, Icon = "trash-2" })
     end,
 })
 
 SettingsTab:Slider({
-    Title = "Прозрачность фона",
-    Desc = "Чем меньше значение (к 0), тем ярче картинка. Чем больше (к 1), тем прозрачнее.",
+    Title = "Background Transparency",
+    Desc = "Lower values (towards 0) make the image brighter. Higher values (towards 1) make it more transparent.",
     Min = 0,
     Max = 1,
     Step = 0.05,
