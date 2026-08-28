@@ -1,8 +1,9 @@
+-- who hacks or modifies this code is a loser!
 
 local WindUI = loadstring(game:HttpGet("https://raw.githubusercontent.com/Footagesus/WindUI/main/dist/main.lua"))()
 
 local Window = WindUI:CreateWindow({
-    Title = "ratnik hub",
+    Title = "tyt hub",
     Icon = "gamepad-2",
     Author = "danya",
     Folder = "MyCustomHub",
@@ -69,7 +70,7 @@ local GamesDatabase = {
     {
         Name = "Skin Upgrader / Case Clicker",
         PlaceId = 131015337227568,
-        Script = "https://pastebin.com/raw/gngpxAae"
+        Script = "https://raw.githubusercontent.com/danyachikish-boop/script2/refs/heads/main/click.lua"
     }
 }
 
@@ -307,7 +308,7 @@ local function toggleWatermark(state)
     if not state then return end 
 
     watermarkGui = Instance.new("ScreenGui")
-    watermarkGui.Name = "RatnikWatermark_Pro"
+    watermarkGui.Name = "TytWatermark_Pro"
     watermarkGui.ResetOnSpawn = false
     watermarkGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     watermarkGui.Parent = getHiddenUIContainer()
@@ -367,7 +368,7 @@ local function toggleWatermark(state)
         return icon
     end
 
-    createText(1, "❖ <b>Ratnik</b>")
+    createText(1, "❖ <b>Tyt</b>")
     createText(2, "|", Color3.fromRGB(120, 120, 140))
     createIcon(3, "rbxassetid://10709782497", Color3.fromRGB(40, 231, 83))
     local fpsLabel = createText(4, "...")
@@ -432,7 +433,7 @@ SettingsTab:Colorpicker({
 
 SettingsTab:Button({
     Title = "Set Image from Folder",
-    Desc = "Loads the first image from workspace/ratnik hub",
+    Desc = "Loads the first image from workspace/tyt hub",
     Callback = function()
         local getasset = getcustomasset or custom_asset
         local listfiles = listfiles
@@ -460,7 +461,7 @@ SettingsTab:Button({
         if not targetFile then
             WindUI:Notify({ 
                 Title = "Image Not Found", 
-                Content = "Place an image (.png/.jpg) in workspace/ratnik hub folder", 
+                Content = "Place an image (.png/.jpg) in workspace/tyt hub folder", 
                 Duration = 4, 
                 Icon = "file-warning" 
             })
